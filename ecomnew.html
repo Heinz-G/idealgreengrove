@@ -197,6 +197,113 @@
 
     <script>
         // --- DATA STORE ---
+        const offers = [
+            {
+                id: 1,
+                tier: "Tier 1",
+                persona: "The Skeptic",
+                name: "The Curious Starter",
+                tagline: "Try our quality without a major commitment. Perfect for first-timers.",
+                price: 299,
+                value: 450,
+                items: [
+                    "1x Premium Pre-Roll (Hybrid)",
+                    "2-Pack 'Dope Donuts' Tester",
+                    "Free Shipping Voucher for next order"
+                ],
+                cta: "Start Your Journey",
+                color: "gray-500",
+                quiz: "curious"
+            },
+            {
+                id: 2,
+                tier: "Tier 2",
+                persona: "The Stressed Pro",
+                name: "The Deep Sleep System",
+                tagline: "Switch off your brain instantly. Get 8 hours of uninterrupted rest.",
+                price: 799,
+                value: 1100,
+                items: [
+                    "High-Dose CBD Sleep Gummies (30ct)",
+                    "Heavy Indica Vape Cartridge",
+                    "510 Thread Battery included"
+                ],
+                cta: "Get Better Sleep",
+                color: "neon-green",
+                featured: true,
+                quiz: "sleep"
+            },
+            {
+                id: 3,
+                tier: "Tier 3",
+                persona: "The Weekender",
+                name: "The Friday Social Stack",
+                tagline: "The perfect uplifting mix for social gatherings without the alcohol hangover.",
+                price: 599,
+                value: 850,
+                items: [
+                    "3g Sativa Indoor Flower",
+                    "Pack of 5 Social Pre-Rolls",
+                    "Smell-proof travel slider tin"
+                ],
+                cta: "Elevate Your Weekend",
+                color: "gray-500",
+                quiz: "social"
+            },
+            {
+                id: 4,
+                tier: "Tier 4",
+                persona: "The Enthusiast",
+                name: "The Top-Shelf Experience",
+                tagline: "For those who appreciate complex terpene profiles and premium hardware.",
+                price: 1800,
+                value: 2500,
+                items: [
+                    "5g 'Reserve' Indoor (Import Genetics)",
+                    "Ceramic Core Sleek Vape Pen",
+                    "Artisan Chocolate Edibles Box"
+                ],
+                cta: "Upgrade Your Stash",
+                color: "blue-400",
+                quiz: "connoisseur"
+            },
+            {
+                id: 5,
+                tier: "Tier 5",
+                persona: "The Regular",
+                name: "The Monthly Re-Up",
+                tagline: "Set and forget. Enough premium stock to last the heavy user a full month.",
+                price: 3500,
+                value: 5000,
+                items: [
+                    "28g (Ounce) Greenhouse Mix",
+                    "3x Full Gram Vape Cartridges",
+                    "Large format Edibles Jar"
+                ],
+                cta: "Stock Up Now",
+                color: "purple-500",
+                quiz: "regular"
+            },
+            {
+                id: 6,
+                tier: "Tier 6",
+                persona: "The Empire Builder",
+                name: "The Dispensary Launchpad",
+                tagline: "Business in a box. We provide stock, branding, and mentorship to start your own shop.",
+                price: 100000,
+                value: 150000,
+                items: [
+                    "R150k Retail Value Inventory",
+                    "White-label packaging options",
+                    "3 Months 1-on-1 wholesale mentorship"
+                ],
+                cta: "Apply For Partnership",
+                color: "purple-500",
+                gradient: true,
+                quiz: "business"
+            }
+        ];
+
         const products = [
             {
                 id: 101,
@@ -286,53 +393,96 @@
 
                 <section id="offers" class="py-24 container mx-auto px-6">
                     <div class="text-center mb-16">
-                        <h2 class="text-4xl font-header font-bold mb-4">CURATED OUTCOMES</h2>
-                        <div class="w-24 h-1 bg-neon-green mx-auto"></div>
+                        <h2 class="text-4xl md:text-5xl font-header font-bold mb-4">FIND YOUR PERFECT OUTCOME</h2>
+                        <p class="text-gray-400 max-w-xl mx-auto">Don't just buy products. Buy a result. Answer one question and we'll match you with the perfect bundle.</p>
+                        <div class="w-24 h-1 bg-neon-green mx-auto mt-6"></div>
                     </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="glass p-8 rounded-xl border-t-2 border-transparent hover:border-neon-green transition-all duration-500 group">
-                            <h3 class="font-header text-2xl text-white mb-2">The Starter</h3>
-                            <p class="text-gray-500 text-sm mb-6">Perfect introduction to premium quality.</p>
-                            <div class="space-y-3 mb-8 text-sm text-gray-300">
-                                <p>• 1x Premium Pre-Roll</p>
-                                <p>• 2-Pack Edible Tester</p>
-                                <p>• Next Order Coupon</p>
-                            </div>
-                            <div class="flex justify-between items-end">
-                                <span class="text-3xl font-header font-bold text-neon-green">R299</span>
-                                <button onclick="addToCart(991, 'The Starter Bundle', 299)" class="text-xs font-bold uppercase tracking-widest border-b border-gray-600 hover:text-neon-green hover:border-neon-green transition pb-1">Add to Cart</button>
+
+                    <!-- Quiz Container -->
+                    <div id="offer-quiz" class="max-w-4xl mx-auto">
+                        <p class="text-center text-neon-green font-header text-lg mb-8 tracking-widest">WHICH DESCRIBES YOU BEST?</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="quiz-options">
+                            <button onclick="selectQuizOption('curious')" class="quiz-option glass p-6 rounded-xl text-left hover:bg-white/10 hover:border-neon-green/50 border border-transparent transition-all duration-300 group">
+                                <div class="text-3xl mb-3">🌱</div>
+                                <h4 class="font-header text-lg text-white group-hover:text-neon-green transition">I'm Curious</h4>
+                                <p class="text-gray-500 text-sm mt-1">Never tried premium. Want to test the waters.</p>
+                            </button>
+
+                            <button onclick="selectQuizOption('sleep')" class="quiz-option glass p-6 rounded-xl text-left hover:bg-white/10 hover:border-neon-green/50 border border-transparent transition-all duration-300 group">
+                                <div class="text-3xl mb-3">😴</div>
+                                <h4 class="font-header text-lg text-white group-hover:text-neon-green transition">I Need Better Sleep</h4>
+                                <p class="text-gray-500 text-sm mt-1">Brain won't switch off. Need serious rest.</p>
+                            </button>
+
+                            <button onclick="selectQuizOption('social')" class="quiz-option glass p-6 rounded-xl text-left hover:bg-white/10 hover:border-neon-green/50 border border-transparent transition-all duration-300 group">
+                                <div class="text-3xl mb-3">🎉</div>
+                                <h4 class="font-header text-lg text-white group-hover:text-neon-green transition">I'm a Social Smoker</h4>
+                                <p class="text-gray-500 text-sm mt-1">Weekends, gatherings, good vibes only.</p>
+                            </button>
+
+                            <button onclick="selectQuizOption('connoisseur')" class="quiz-option glass p-6 rounded-xl text-left hover:bg-white/10 hover:border-neon-green/50 border border-transparent transition-all duration-300 group">
+                                <div class="text-3xl mb-3">👑</div>
+                                <h4 class="font-header text-lg text-white group-hover:text-neon-green transition">I Want the Best</h4>
+                                <p class="text-gray-500 text-sm mt-1">Top-shelf genetics, premium hardware.</p>
+                            </button>
+
+                            <button onclick="selectQuizOption('regular')" class="quiz-option glass p-6 rounded-xl text-left hover:bg-white/10 hover:border-neon-green/50 border border-transparent transition-all duration-300 group">
+                                <div class="text-3xl mb-3">📦</div>
+                                <h4 class="font-header text-lg text-white group-hover:text-neon-green transition">I Need Monthly Supply</h4>
+                                <p class="text-gray-500 text-sm mt-1">Daily user. Don't want to reorder constantly.</p>
+                            </button>
+
+                            <button onclick="selectQuizOption('business')" class="quiz-option glass p-6 rounded-xl text-left hover:bg-white/10 hover:border-neon-green/50 border border-transparent transition-all duration-300 group">
+                                <div class="text-3xl mb-3">🚀</div>
+                                <h4 class="font-header text-lg text-white group-hover:text-neon-green transition">I Want to Start a Business</h4>
+                                <p class="text-gray-500 text-sm mt-1">Ready to build my own cannabis empire.</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Result Container (Hidden by default) -->
+                    <div id="offer-result" class="hidden max-w-2xl mx-auto">
+                        <div id="offer-card" class="glass p-10 rounded-2xl border-t-4 border-neon-green relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-neon-green/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between mb-6">
+                                    <span id="result-tier" class="text-neon-green text-sm font-bold uppercase tracking-widest"></span>
+                                    <button onclick="resetQuiz()" class="text-gray-500 hover:text-white text-sm flex items-center gap-2 transition">
+                                        <i class="fas fa-arrow-left"></i> Choose Again
+                                    </button>
+                                </div>
+
+                                <h3 id="result-name" class="font-header text-4xl text-white mb-3"></h3>
+                                <p id="result-tagline" class="text-gray-400 mb-8"></p>
+
+                                <div class="bg-dark-800/50 rounded-xl p-6 mb-8">
+                                    <p class="text-xs text-gray-500 uppercase tracking-widest mb-4">What's Included:</p>
+                                    <ul id="result-items" class="space-y-3 text-gray-300"></ul>
+                                </div>
+
+                                <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                                    <div>
+                                        <p class="text-gray-500 text-sm"><span class="line-through text-red-400" id="result-value"></span></p>
+                                        <p class="text-4xl font-header font-bold text-neon-green" id="result-price"></p>
+                                    </div>
+                                    <button id="result-cta" onclick="addOfferToCart()" class="bg-neon-green text-dark-950 px-8 py-4 font-header font-bold rounded hover:bg-white transition uppercase tracking-widest w-full sm:w-auto text-center"></button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="glass p-8 rounded-xl border-t-2 border-neon-green bg-white/5 transform md:-translate-y-4 shadow-2xl relative">
-                            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-neon-green text-dark-950 text-[10px] font-bold px-3 py-1 uppercase tracking-widest rounded-full">Best Value</div>
-                            <h3 class="font-header text-2xl text-white mb-2">The Deep Sleep</h3>
-                            <p class="text-gray-500 text-sm mb-6">Switch off instantly. 8 hours guaranteed.</p>
-                            <div class="space-y-3 mb-8 text-sm text-gray-300">
-                                <p>• Sleep Gummies (30ct)</p>
-                                <p>• Indica Vape Cartridge</p>
-                                <p>• 510 Battery Included</p>
-                            </div>
-                            <div class="flex justify-between items-end">
-                                <span class="text-3xl font-header font-bold text-neon-green">R799</span>
-                                <button onclick="addToCart(992, 'Deep Sleep System', 799)" class="bg-neon-green text-dark-950 px-4 py-2 text-xs font-bold uppercase tracking-widest rounded hover:bg-white transition">Add to Cart</button>
-                            </div>
+                        <!-- Show All Link -->
+                        <div class="text-center mt-8">
+                            <button onclick="showAllOffers()" class="text-gray-500 hover:text-neon-green transition text-sm font-bold uppercase tracking-widest">
+                                Or browse all 6 offers <i class="fas fa-chevron-down ml-2"></i>
+                            </button>
                         </div>
+                    </div>
 
-                        <div class="glass p-8 rounded-xl border-t-2 border-transparent hover:border-neon-green transition-all duration-500 group">
-                            <h3 class="font-header text-2xl text-white mb-2">The Social</h3>
-                            <p class="text-gray-500 text-sm mb-6">Uplifting vibes without the hangover.</p>
-                            <div class="space-y-3 mb-8 text-sm text-gray-300">
-                                <p>• 3g Sativa Indoor</p>
-                                <p>• 5x Social Pre-rolls</p>
-                                <p>• Travel Tin</p>
-                            </div>
-                            <div class="flex justify-between items-end">
-                                <span class="text-3xl font-header font-bold text-neon-green">R599</span>
-                                <button onclick="addToCart(993, 'The Social Stack', 599)" class="text-xs font-bold uppercase tracking-widest border-b border-gray-600 hover:text-neon-green hover:border-neon-green transition pb-1">Add to Cart</button>
-                            </div>
-                        </div>
+                    <!-- All Offers Grid (Hidden by default) -->
+                    <div id="all-offers" class="hidden mt-16">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="all-offers-grid"></div>
                     </div>
                 </section>
             `,
@@ -507,6 +657,90 @@
         function removeFromCart(index) {
             cart.splice(index, 1);
             updateCartUI();
+        }
+
+        // --- QUIZ LOGIC ---
+        let selectedOffer = null;
+
+        function selectQuizOption(quizType) {
+            // Find matching offer
+            selectedOffer = offers.find(o => o.quiz === quizType);
+            if (!selectedOffer) return;
+
+            // Hide quiz, show result
+            document.getElementById('offer-quiz').classList.add('hidden');
+            document.getElementById('offer-result').classList.remove('hidden');
+            document.getElementById('offer-result').classList.add('fade-in');
+
+            // Populate result card
+            document.getElementById('result-tier').textContent = selectedOffer.tier + ': ' + selectedOffer.persona;
+            document.getElementById('result-name').textContent = selectedOffer.name;
+            document.getElementById('result-tagline').textContent = selectedOffer.tagline;
+            document.getElementById('result-value').textContent = 'R' + selectedOffer.value.toLocaleString() + ' Value';
+            document.getElementById('result-price').textContent = 'R' + selectedOffer.price.toLocaleString();
+            document.getElementById('result-cta').textContent = selectedOffer.cta;
+
+            // Populate items
+            const itemsContainer = document.getElementById('result-items');
+            itemsContainer.innerHTML = selectedOffer.items.map(item =>
+                `<li class="flex items-start gap-3">
+                    <i class="fas fa-check text-neon-green mt-1"></i>
+                    <span>${item}</span>
+                </li>`
+            ).join('');
+
+            // Scroll to result
+            setTimeout(() => {
+                document.getElementById('offer-result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+
+        function resetQuiz() {
+            selectedOffer = null;
+            document.getElementById('offer-result').classList.add('hidden');
+            document.getElementById('all-offers').classList.add('hidden');
+            document.getElementById('offer-quiz').classList.remove('hidden');
+            document.getElementById('offer-quiz').classList.add('fade-in');
+        }
+
+        function addOfferToCart() {
+            if (selectedOffer) {
+                addToCart(900 + selectedOffer.id, selectedOffer.name, selectedOffer.price);
+            }
+        }
+
+        function showAllOffers() {
+            const container = document.getElementById('all-offers');
+            const grid = document.getElementById('all-offers-grid');
+
+            // Generate all offer cards
+            grid.innerHTML = offers.map(offer => `
+                <div class="glass p-6 rounded-xl border-t-2 ${offer.featured ? 'border-neon-green bg-white/5' : 'border-gray-700 hover:border-neon-green'} transition-all duration-300 ${offer.featured ? 'ring-1 ring-neon-green/20' : ''}">
+                    ${offer.featured ? '<div class="text-neon-green text-xs font-bold uppercase tracking-widest mb-2">Most Popular</div>' : ''}
+                    <p class="text-gray-500 text-xs uppercase tracking-widest mb-1">${offer.tier}</p>
+                    <h4 class="font-header text-xl text-white mb-2">${offer.name}</h4>
+                    <p class="text-gray-500 text-sm mb-4">${offer.tagline}</p>
+                    <ul class="space-y-2 mb-6 text-sm text-gray-400">
+                        ${offer.items.map(item => `<li class="flex items-start gap-2"><i class="fas fa-check text-neon-green text-xs mt-1"></i> ${item}</li>`).join('')}
+                    </ul>
+                    <div class="flex items-end justify-between">
+                        <div>
+                            <p class="text-gray-600 text-xs line-through">R${offer.value.toLocaleString()}</p>
+                            <p class="text-2xl font-header font-bold ${offer.featured ? 'text-neon-green' : 'text-white'}">R${offer.price.toLocaleString()}</p>
+                        </div>
+                        <button onclick="addToCart(${900 + offer.id}, '${offer.name}', ${offer.price})" class="${offer.featured ? 'bg-neon-green text-dark-950' : 'bg-dark-700 text-white hover:bg-neon-green hover:text-dark-950'} px-4 py-2 text-xs font-bold uppercase tracking-widest rounded transition">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            container.classList.remove('hidden');
+            container.classList.add('fade-in');
+
+            setTimeout(() => {
+                container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
         }
 
         // --- INIT ---
